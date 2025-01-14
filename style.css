@@ -68,6 +68,14 @@ form > div:last-child {
 
 .read {
     font-size: 18px;
+}
+
+.book > div:last-child {
     align-self: end;
     justify-self: center;
+}
+
+.book > div:last-child div {
+    display: flex;
+    justify-content: center;
 }
