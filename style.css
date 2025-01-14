@@ -4,22 +4,48 @@
     box-sizing: border-box;
 }
 
+body {
+    background-color: rgb(129, 125, 80);
+}
+
 h1 {
     text-align: center;
 }
 
+body > div:nth-child(2){
+    display: flex;
+    justify-content: center;
+    padding: 5px;
+}
+
+body > div:nth-last-child(2) {
+    display: grid;
+    grid-template-rows: 1fr 5fr;
+}
+
+form {
+    background-color: rgb(92, 94, 94);
+    padding: 0 20px;
+    grid-template-columns: repeat(4, 2fr) 1fr;
+    align-items: center;
+    display: none;
+}
+
+form > div:last-child {
+    justify-self: end;
+}
+
 .book-display {
     display: grid;
-    grid-template-columns: repeat(5, 19.8vw);
-    grid-template-rows: repeat(auto-fit, 47.4vh);
+    grid-template-columns: repeat(auto-fill, 19.7vw);
+    grid-template-rows: repeat(auto-fill, 47.4vh);
     grid-auto-rows: 47.4vh;
-    gap: 5px 5px;
+    gap: 5px;
 }
 
 .book {
     background-color: blanchedalmond;
     border-left: burlywood solid 2vw;
-    border-bottom: gray solid 2px;
     display: grid;
     grid-template-rows: 1fr 1fr;
 }
