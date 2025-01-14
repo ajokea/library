@@ -20,6 +20,7 @@ function displayBooks() {
     for (let book of myLibrary) {
         const bookDiv = document.createElement('div');
         bookDiv.classList.add('book');
+        bookDiv.setAttribute('data-index', myLibrary.indexOf(book));
         bookDisplay.appendChild(bookDiv);
 
         const bookInfo = document.createElement('div');
@@ -39,12 +40,22 @@ function displayBooks() {
         bookInfo.appendChild(author);
         bookInfo.appendChild(pages);
 
+        const bookInfo2 = document.createElement('div');
+        const buttonDiv = document.createElement('div');
+        const removeButton = document.createElement('button');
+        removeButton.classList.add('remove-book');
+        removeButton.textContent = 'Remove';
+        buttonDiv.appendChild(removeButton);
+
         const read = document.createElement('p');
         read.classList.add('read');
         read.innerHTML = book.read ? 'Already read? \&#x2713' : 'Already read? \&#x2717';
         
+        bookInfo2.appendChild(buttonDiv);
+        bookInfo2.appendChild(read);
+
         bookDiv.appendChild(bookInfo);
-        bookDiv.appendChild(read);
+        bookDiv.appendChild(bookInfo2);
     }
 }
 
@@ -61,12 +72,10 @@ newBookButton.addEventListener('click', () => {
 });
 
 const addBookButton = document.getElementById('add-book');
-console.log(addBookButton);
 addBookButton.addEventListener('click', (event) => {
     event.preventDefault();
     const formData = new FormData(form);
     const bookData = Object.fromEntries(formData);
-    console.log(bookData);
 
     let bookTitle = bookData['book-title'];
     let bookAuthor = bookData['book-author'];
@@ -82,4 +91,13 @@ addBookButton.addEventListener('click', (event) => {
     
     form.reset();
     form.style.display = "none";
+});
+
+bookDisplay.addEventListener('click', (event) => {
+    if (event.target.matches('.remove-book')) {
+        let book = event.target.parentElement.parentElement.parentElement;
+        let index = book.dataset.index;
+        myLibrary.splice(index, 1);
+        displayBooks();
+    }
 });
