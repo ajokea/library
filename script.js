@@ -48,7 +48,38 @@ function displayBooks() {
     }
 }
 
-addBookToLibrary('The Hobbit', 'J.R.R. Tolkien', 295, true);
-addBookToLibrary('The Hobbit', 'J.R.R. Tolkien', 295, false);
+const newBookButton = document.getElementById('new-book');
+const form = document.querySelector('form');
 
-displayBooks();
+newBookButton.addEventListener('click', () => {
+    if (form.style.display === "grid") {
+        form.style.display = "none";
+    } else {
+        form.style.display = "grid";
+    }
+    form.reset();
+});
+
+const addBookButton = document.getElementById('add-book');
+console.log(addBookButton);
+addBookButton.addEventListener('click', (event) => {
+    event.preventDefault();
+    const formData = new FormData(form);
+    const bookData = Object.fromEntries(formData);
+    console.log(bookData);
+
+    let bookTitle = bookData['book-title'];
+    let bookAuthor = bookData['book-author'];
+    let bookPages = bookData['book-pages'];
+    let readBook = bookData['book-read'] === "no" ? false : true;
+
+    const validBook = bookTitle && bookAuthor && bookPages;
+
+    if (validBook) {
+        addBookToLibrary(bookTitle, bookAuthor, bookPages, readBook);
+        displayBooks();
+    }
+    
+    form.reset();
+    form.style.display = "none";
+});
