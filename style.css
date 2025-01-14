@@ -79,3 +79,8 @@ form > div:last-child {
     display: flex;
     justify-content: center;
 }
+
+.book > div:last-child div:first-child {
+    gap: 5px;
+    padding-bottom: 5px;
+}
