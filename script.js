@@ -7,6 +7,10 @@ function Book(title, author, pages, read) {
     this.read = read;
 }
 
+Book.prototype.toggleReadStatus = function() {
+    this.read = !this.read;
+}
+
 function addBookToLibrary(title, author, pages, read) {
     let book = new Book(title, author, pages, read);
     myLibrary.push(book);
@@ -41,18 +45,26 @@ function displayBooks() {
         bookInfo.appendChild(pages);
 
         const bookInfo2 = document.createElement('div');
+
+        const readDiv = document.createElement('div');
+        const read = document.createElement('p');
+        read.classList.add('read');
+        read.innerHTML = book.read ? 'Read' : 'Unread';
+
+        const readButton = document.createElement('button');
+        readButton.classList.add('read-book')
+        readButton.textContent = book.read ? 'Not read it?' : 'Read it?';
+        readDiv.appendChild(read);
+        readDiv.appendChild(readButton);
+        
         const buttonDiv = document.createElement('div');
         const removeButton = document.createElement('button');
         removeButton.classList.add('remove-book');
         removeButton.textContent = 'Remove';
         buttonDiv.appendChild(removeButton);
 
-        const read = document.createElement('p');
-        read.classList.add('read');
-        read.innerHTML = book.read ? 'Already read? \&#x2713' : 'Already read? \&#x2717';
-        
+        bookInfo2.appendChild(readDiv);
         bookInfo2.appendChild(buttonDiv);
-        bookInfo2.appendChild(read);
 
         bookDiv.appendChild(bookInfo);
         bookDiv.appendChild(bookInfo2);
@@ -98,6 +110,15 @@ bookDisplay.addEventListener('click', (event) => {
         let book = event.target.parentElement.parentElement.parentElement;
         let index = book.dataset.index;
         myLibrary.splice(index, 1);
+        displayBooks();
+    }
+});
+
+bookDisplay.addEventListener('click', (event) => {
+    if (event.target.matches('.read-book')) {
+        let book = event.target.parentElement.parentElement.parentElement;
+        let index = book.dataset.index;
+        myLibrary[index].toggleReadStatus();
         displayBooks();
     }
 });
