@@ -1,0 +1,47 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+h1 {
+    text-align: center;
+}
+
+.book-display {
+    display: grid;
+    grid-template-columns: repeat(5, 19.8vw);
+    grid-template-rows: repeat(auto-fit, 47.4vh);
+    grid-auto-rows: 47.4vh;
+    gap: 5px 5px;
+}
+
+.book {
+    background-color: blanchedalmond;
+    border-left: burlywood solid 2vw;
+    border-bottom: gray solid 2px;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+}
+
+.title {
+    text-align: center;
+    font-size: 25px;
+    font-weight: 700;
+}
+
+.author {
+    text-align: center;
+    font-size: 18px;
+    font-style: italic;
+}
+
+.pages {
+    text-align: center;
+}
+
+.read {
+    font-size: 18px;
+    align-self: end;
+    justify-self: center;
+}
