@@ -76,17 +76,25 @@ function displayBooks() {
 const newBookButton = document.getElementById('new-book');
 const form = document.querySelector('form');
 
+const body = document.body;
+const backdrop = document.createElement('div');
+backdrop.className = 'backdrop';
+
 newBookButton.addEventListener('click', () => {
-    if (form.style.display === "grid") {
-        form.style.display = "none";
-    } else {
-        form.style.display = "grid";
-    }
+    body.appendChild(backdrop);
+    form.style.display = "block";
+    form.style.zIndex = 1
     form.reset();
 });
 
-const addBookButton = document.getElementById('add-book');
-addBookButton.addEventListener('click', (event) => {
+const cancelBookButton = document.getElementById('cancel-book');
+cancelBookButton.addEventListener('click', () => {
+    form.style.display = "none";
+    body.removeChild(backdrop);
+    form.reset();
+})
+
+form.addEventListener('submit', (event) => {
     event.preventDefault();
     const formData = new FormData(form);
     const bookData = Object.fromEntries(formData);
@@ -94,17 +102,17 @@ addBookButton.addEventListener('click', (event) => {
     let bookTitle = bookData['book-title'];
     let bookAuthor = bookData['book-author'];
     let bookPages = bookData['book-pages'];
-    let readBook = bookData['book-read'] === "no" ? false : true;
+    let readBook = bookData['book-read'] === "no" ? false : bookData['book-read'] === 'yes' ? true : '';
 
     const validBook = bookTitle && bookAuthor && bookPages;
 
     if (validBook) {
         addBookToLibrary(bookTitle, bookAuthor, bookPages, readBook);
         displayBooks();
+        form.style.display = "none";
+        body.removeChild(backdrop);
+    } else {
     }
-    
-    form.reset();
-    form.style.display = "none";
 });
 
 bookDisplay.addEventListener('click', (event) => {
